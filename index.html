@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thailand, together — trip planning form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF3E3;
+    --paper:#FFFDF7;
+    --teal-950:#0A2624;
+    --teal-800:#0F3D3E;
+    --teal-600:#1F6F5C;
+    --teal-100:#DCEDE6;
+    --gold-600:#C88A2E;
+    --gold-500:#E0A53D;
+    --gold-100:#FBEBCE;
+    --coral-600:#D2603C;
+    --coral-500:#E8734B;
+    --coral-100:#FBE1D6;
+    --pink-500:#E4708A;
+    --pink-100:#FBE1E8;
+    --ink:#22302E;
+    --ink-soft:#5B6864;
+    --line:#E8DCC0;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;}
+  .wrap{
+    background:
+      radial-gradient(var(--line) 1px, transparent 1px);
+    background-size:22px 22px;
+    background-color:var(--cream);
+    font-family:'Work Sans', sans-serif;
+    color:var(--ink);
+    max-width:760px;
+    margin:0 auto;
+    padding:0 0 4rem;
+    overflow:hidden;
+  }
+
+  .hero{
+    background:var(--teal-800);
+    color:var(--cream);
+    padding:3.4rem 2rem 4.5rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .sunwrap{
+    position:absolute; top:-56px; right:-30px; width:220px; height:220px;
+    animation:spin 40s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .hero .plane{
+    position:absolute; top:44px; left:-10px; width:90px; opacity:.9;
+    animation:fly 1.1s ease-out;
+  }
+  @keyframes fly{ from{ transform:translateX(-40px); opacity:0;} to{ transform:translateX(0); opacity:.9;} }
+  .hero .leaf1{position:absolute; bottom:-10px; left:20px; width:120px; opacity:.5;}
+  .hero .leaf2{position:absolute; top:10px; right:60px; width:70px; opacity:.35; transform:scaleX(-1) rotate(20deg);}
+  .eyebrow{
+    font-family:'Caveat', cursive;
+    font-size:22px;
+    color:var(--gold-500);
+    font-weight:700;
+    margin:0 0 .1rem;
+    transform:rotate(-2deg);
+    display:inline-block;
+    position:relative;
+    z-index:1;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:2.6rem;
+    line-height:1.1;
+    margin:0 0 .9rem;
+    max-width:19ch;
+    position:relative;
+    z-index:1;
+  }
+  .hero h1 .underline{
+    position:relative;
+    white-space:nowrap;
+  }
+  .hero h1 .underline svg{position:absolute; left:0; bottom:-8px; width:100%; height:14px;}
+  .hero p{
+    font-size:15.5px;
+    line-height:1.6;
+    color:#D9E7E1;
+    max-width:46ch;
+    margin:0;
+    position:relative;
+    z-index:1;
+  }
+  .wave-divider{display:block; width:100%; height:34px; margin-top:-2px;}
+
+  .path{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:1.3rem 2rem 0;
+    max-width:760px;
+    margin:0 auto;
+  }
+  .path .seg{flex:1; height:5px; background:var(--line); border-radius:6px; overflow:hidden; position:relative;}
+  .path .seg i{display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--coral-500), var(--gold-500)); transition:width .4s ease;}
+
+  section.card{
+    background:var(--paper);
+    margin:1.9rem 2rem 0;
+    border-radius:20px;
+    padding:1.85rem 1.85rem 2rem;
+    border:1px solid var(--line);
+    position:relative;
+    box-shadow:0 3px 0 var(--line);
+  }
+  .stamp{
+    position:absolute;
+    top:-22px;
+    left:1.6rem;
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    background:var(--teal-800);
+    color:var(--gold-100);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:3px dashed var(--gold-500);
+    box-shadow:0 0 0 4px var(--cream);
+  }
+  .stamp svg{width:24px; height:24px;}
+  section.card:nth-of-type(odd) .stamp{transform:rotate(-6deg);}
+  section.card:nth-of-type(even) .stamp{transform:rotate(5deg);}
+
+  .section-head{display:flex; align-items:baseline; gap:.6rem; margin:.9rem 0 .25rem;}
+  h2.section-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.4rem;
+    margin:0;
+    color:var(--teal-800);
+  }
+  .section-tag{
+    font-family:'Caveat', cursive;
+    font-size:17px;
+    color:var(--coral-600);
+    font-weight:700;
+    transform:rotate(-3deg);
+    display:inline-block;
+  }
+  .section-sub{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin:0 0 1.3rem;
+    line-height:1.55;
+  }
+
+  label.field-label{
+    display:block;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--teal-800);
+    margin:1.1rem 0 .5rem;
+  }
+  label.field-label:first-of-type{margin-top:0;}
+  input[type=text], input[type=email], textarea, select{
+    width:100%;
+    font-family:'Work Sans', sans-serif;
+    font-size:15px;
+    padding:.68rem .85rem;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    color:var(--ink);
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none;
+    border-color:var(--coral-500);
+    box-shadow:0 0 0 3px var(--coral-100);
+  }
+  textarea{resize:vertical; min-height:70px; line-height:1.5;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:1rem;}
+
+  .pills{display:flex; flex-wrap:wrap; gap:9px; margin-top:.4rem;}
+  .pill{position:relative;}
+  .pill input{position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer;}
+  .pill span{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:.52rem 1rem;
+    border-radius:999px;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    font-size:14px;
+    color:var(--ink);
+    cursor:pointer;
+    transition:transform .15s cubic-bezier(.34,1.56,.64,1), background .15s ease, border-color .15s ease, color .15s ease;
+    user-select:none;
+  }
+  .pill span:hover{transform:translateY(-2px) rotate(-1deg);}
+  .pill input:checked + span{
+    background:var(--coral-500);
+    border-color:var(--coral-500);
+    color:#fff;
+    transform:rotate(1deg);
+  }
+  #sceneryPills .pill input:checked + span{background:var(--teal-600); border-color:var(--teal-600);}
+  #monthPills .pill input:checked + span{background:var(--gold-500); border-color:var(--gold-500); color:var(--teal-950);}
+  #stylePills .pill input:checked + span{background:var(--pink-500); border-color:var(--pink-500);}
+  .pill input:focus-visible + span{outline:2px solid var(--teal-600); outline-offset:2px;}
+
+  .weather-note{
+    background:var(--teal-100);
+    border-radius:14px;
+    padding:1rem 1.15rem;
+    font-size:13.5px;
+    color:var(--teal-800);
+    line-height:1.55;
+    margin-bottom:1.2rem;
+    border-left:4px solid var(--teal-600);
+  }
+  table.weather{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+    margin-bottom:1.3rem;
+  }
+  table.weather th{
+    text-align:left;
+    font-weight:700;
+    color:var(--teal-800);
+    padding:.5rem .5rem;
+    border-bottom:2px solid var(--gold-500);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+  }
+  table.weather td{
+    padding:.6rem .5rem;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+    color:var(--ink);
+  }
+  table.weather tr:nth-child(odd) td{background:#FFFAF0;}
+  table.weather td.month{font-weight:700; color:var(--teal-800); white-space:nowrap;}
+  .price-tag{
+    display:inline-block;
+    font-size:11.5px;
+    font-weight:700;
+    padding:.18rem .6rem;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .price-high{background:var(--coral-100); color:var(--coral-600);}
+  .price-mid{background:var(--gold-100); color:var(--gold-600);}
+  .price-low{background:var(--teal-100); color:var(--teal-600);}
+
+  .radio-list{display:flex; flex-direction:column; gap:9px; margin-top:.4rem;}
+  .radio-opt{position:relative;}
+  .radio-opt input{position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer;}
+  .radio-opt .box{
+    display:flex; align-items:flex-start; gap:11px;
+    padding:.75rem .95rem;
+    border-radius:12px;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .radio-opt .dot{
+    width:17px; height:17px; border-radius:50%; border:2px solid var(--line);
+    flex-shrink:0; margin-top:2px; position:relative;
+  }
+  .radio-opt input:checked ~ .box{border-color:var(--teal-600); background:var(--teal-100);}
+  .radio-opt input:checked ~ .box .dot{border-color:var(--teal-600);}
+  .radio-opt input:checked ~ .box .dot::after{
+    content:''; position:absolute; inset:3px; border-radius:50%; background:var(--teal-600);
+  }
+  .radio-opt .box .txt strong{display:block; font-size:14px; color:var(--ink);}
+  .radio-opt .box .txt span{font-size:12.5px; color:var(--ink-soft);}
+  .radio-opt input:focus-visible ~ .box{outline:2px solid var(--coral-500); outline-offset:2px;}
+
+  .hint{font-size:12.5px; color:var(--ink-soft); margin-top:.5rem;}
+  .submit-bar{
+    margin:2.2rem 2rem 0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:.7rem;
+  }
+  button.submit{
+    background:var(--coral-500);
+    color:#fff;
+    border:none;
+    font-family:'Work Sans', sans-serif;
+    font-weight:700;
+    font-size:16px;
+    padding:.95rem 2.4rem;
+    border-radius:999px;
+    cursor:pointer;
+    box-shadow:0 4px 0 var(--coral-600);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  button.submit:hover{transform:translateY(-2px);}
+  button.submit:active{transform:translateY(2px); box-shadow:0 1px 0 var(--coral-600);}
+
+  .confirm{
+    display:none;
+    margin:1.9rem 2rem 0;
+    background:var(--teal-800);
+    color:var(--cream);
+    border-radius:20px;
+    padding:2rem 1.75rem;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .confirm .burst{position:absolute; inset:0; pointer-events:none;}
+  .confirm h3{font-family:'Fraunces', serif; font-weight:600; font-size:1.4rem; margin:0; position:relative;}
+  .confirm span{display:block; font-family:'Work Sans', sans-serif; font-size:13.5px; color:#CFE2DB; margin-top:.55rem; font-weight:400; position:relative;}
+
+  @media (max-width:520px){
+    .row2{grid-template-columns:1fr;}
+    .hero h1{font-size:2rem;}
+    section.card, .submit-bar, .confirm{margin-left:1rem; margin-right:1rem;}
+    .path{padding-left:1rem; padding-right:1rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <svg class="sunwrap" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <circle cx="50" cy="50" r="18" fill="#E0A53D"/>
+      <g stroke="#E0A53D" stroke-width="4" stroke-linecap="round">
+        <line x1="50" y1="6" x2="50" y2="18"/>
+        <line x1="50" y1="82" x2="50" y2="94"/>
+        <line x1="6" y1="50" x2="18" y2="50"/>
+        <line x1="82" y1="50" x2="94" y2="50"/>
+        <line x1="19" y1="19" x2="27" y2="27"/>
+        <line x1="73" y1="73" x2="81" y2="81"/>
+        <line x1="81" y1="19" x2="73" y2="27"/>
+        <line x1="27" y1="73" x2="19" y2="81"/>
+      </g>
+    </svg>
+    <svg class="plane" viewBox="0 0 120 40" fill="none" aria-hidden="true">
+      <path d="M2 30c20-16 40-4 46-2M2 30l14-2M2 30l6 10" stroke="#D9E7E1" stroke-width="1.5" stroke-dasharray="3 4" fill="none"/>
+      <g transform="translate(48 18) rotate(-14)">
+        <path d="M0 6 L22 0 L0 -6 L4 0 Z" fill="#FBF3E3"/>
+        <path d="M8 -1 L14 -10 L18 -9 L14 -1 Z" fill="#FBF3E3"/>
+        <path d="M8 1 L14 10 L18 9 L14 1 Z" fill="#FBF3E3"/>
+      </g>
+    </svg>
+    <svg class="leaf1" viewBox="0 0 120 90" fill="none" aria-hidden="true">
+      <path d="M2 88C2 40 40 6 100 4C90 40 70 70 2 88Z" fill="#1F6F5C"/>
+      <path d="M4 86C40 60 70 40 96 8" stroke="#0A2624" stroke-width="1.2" fill="none"/>
+    </svg>
+    <svg class="leaf2" viewBox="0 0 120 90" fill="none" aria-hidden="true">
+      <path d="M2 88C2 40 40 6 100 4C90 40 70 70 2 88Z" fill="#E0A53D"/>
+    </svg>
+    <p class="eyebrow">group trip planning ✳</p>
+    <h1>Let's shape our <span class="underline">Thailand<svg viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 10c40-10 156-10 196 0" stroke="#E8734B" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span> trip together</h1>
+    <p>A few questions to help us pick dates, a home base, and a rhythm everyone's actually excited about (but also we grown, you can do what you want 🤷🏾‍♀️). Takes about 4 minutes — your answers go straight to the trip organizer, nobody else in the group sees them.</p>
+  </div>
+  <svg class="wave-divider" viewBox="0 0 760 34" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 0 C 120 34 240 0 380 17 C 520 34 640 0 760 17 L760 0 L0 0 Z" fill="#0F3D3E"/>
+  </svg>
+
+  <div class="path" id="progressPath"></div>
+
+  <form id="tripForm">
+
+    <section class="card">
+      <div class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="#FBEBCE" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div>
+      <div class="section-head"><h2 class="section-title">Who's asking</h2><span class="section-tag">step 1</span></div>
+      <p class="section-sub">So we know who's said what.</p>
+      <div class="row2">
+        <div>
+          <label class="field-label" for="name">Name</label>
+          <input type="text" id="name" required placeholder="Your name">
+        </div>
+        <div>
+          <label class="field-label" for="email">Email (optional)</label>
+          <input type="email" id="email" placeholder="name@email.com">
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="#FBEBCE" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M15 9l-3.5 1.5L10 14l3.5-1.5z"/></svg></div>
+      <div class="section-head"><h2 class="section-title">Activities</h2><span class="section-tag">what we'll do</span></div>
+      <p class="section-sub">Pick everything that sounds like a good day to you — no limit.</p>
+      <div class="pills" id="activitiesPills">
+        <label class="pill"><input type="checkbox" value="Island hopping & boat trips"><span>Island hopping & boat trips</span></label>
+        <label class="pill"><input type="checkbox" value="Snorkeling / diving"><span>Snorkeling / diving</span></label>
+        <label class="pill"><input type="checkbox" value="Temple & culture visits"><span>Temple & culture visits</span></label>
+        <label class="pill"><input type="checkbox" value="Beach day"><span>Beach day</span></label>
+        <label class="pill"><input type="checkbox" value="Jungle trekking"><span>Jungle trekking</span></label>
+        <label class="pill"><input type="checkbox" value="Waterfalls & national parks"><span>Waterfalls & national parks</span></label>
+        <label class="pill"><input type="checkbox" value="Street food & cooking classes"><span>Street food & cooking classes</span></label>
+        <label class="pill"><input type="checkbox" value="Elephant sanctuary"><span>Elephant sanctuary</span></label>
+        <label class="pill"><input type="checkbox" value="Markets & shopping"><span>Markets & shopping</span></label>
+        <label class="pill"><input type="checkbox" value="Nightlife"><span>Nightlife</span></label>
+        <label class="pill"><input type="checkbox" value="Spa, wellness, massage"><span>Spa, wellness, massage</span></label>
+        <label class="pill"><input type="checkbox" value="Muay Thai / adventure sports"><span>Muay Thai / adventure sports</span></label>
+        <label class="pill"><input type="checkbox" value="Mostly relaxing, low itinerary"><span>Mostly relaxing, low itinerary</span></label>
+      </div>
+      <label class="field-label" for="activitiesOther">Anything else you're hoping to do?</label>
+      <textarea id="activitiesOther" placeholder="e.g. a specific tour, a class, something on your list"></textarea>
+    </section>
+
+    <section class="card">
+      <div class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="#FBEBCE" stroke-width="1.8"><path d="M4 20l6-13 4 8 3-5 3 10z"/><circle cx="18" cy="6" r="1.6"/></svg></div>
+      <div class="section-head"><h2 class="section-title">Scenery</h2><span class="section-tag">what we'll see</span></div>
+      <p class="section-sub">What do you want to be looking at? (lowkey the same question but just vibe)</p>
+      <div class="pills" id="sceneryPills">
+        <label class="pill"><input type="checkbox" value="Beaches & turquoise water"><span>Beaches & turquoise water</span></label>
+        <label class="pill"><input type="checkbox" value="Limestone cliffs & islands"><span>Limestone cliffs & islands</span></label>
+        <label class="pill"><input type="checkbox" value="Mountains & jungle"><span>Mountains & jungle</span></label>
+        <label class="pill"><input type="checkbox" value="Rice terraces & countryside"><span>Rice terraces & countryside</span></label>
+        <label class="pill"><input type="checkbox" value="Golden temples & old cities"><span>Golden temples & old cities</span></label>
+        <label class="pill"><input type="checkbox" value="Waterfalls & jungle rivers"><span>Waterfalls & jungle rivers</span></label>
+        <label class="pill"><input type="checkbox" value="City skyline & street life"><span>City skyline & street life</span></label>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="#FBEBCE" stroke-width="1.8"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.6 4.6l2 2M17.4 17.4l2 2M19.4 4.6l-2 2M6.6 17.4l-2 2"/></svg></div>
+      <div class="section-head"><h2 class="section-title">Time of year</h2><span class="section-tag">when we'll go</span></div>
+      <p class="section-sub">Weather and prices swing a lot across the year — here's the honest rundown before you pick.</p>
+      <div class="weather-note">Roughly: <strong>Nov–Feb</strong> is cool, dry, and busiest (highest prices). <strong>Mar–May</strong> is hot and drier with fewer crowds. <strong>Jun–Oct</strong> is rainy season — showers most days but warm, green, and noticeably cheaper.</div>
+      <table class="weather">
+        <thead><tr><th>Month</th><th>Weather</th><th>Typical cost</th></tr></thead>
+        <tbody>
+          <tr><td class="month">Jan</td><td>Cool, dry, ~20–30°C. Least rain all year.</td><td><span class="price-tag price-high">Peak — highest</span></td></tr>
+          <tr><td class="month">Feb</td><td>Still dry and warm, humidity stays low.</td><td><span class="price-tag price-high">Peak — high</span></td></tr>
+          <tr><td class="month">Mar</td><td>Heating up fast, ~30–35°C, mostly dry.</td><td><span class="price-tag price-mid">Shoulder — dropping</span></td></tr>
+          <tr><td class="month">Apr</td><td>Hottest month of the year; Songkran festival mid-month.</td><td><span class="price-tag price-mid">Spikes for Songkran, then drops</span></td></tr>
+          <tr><td class="month">May</td><td>Hot, first monsoon rains begin.</td><td><span class="price-tag price-low">Low — good value</span></td></tr>
+          <tr><td class="month">Jun</td><td>Early monsoon — short, predictable afternoon showers.</td><td><span class="price-tag price-low">Low — good value</span></td></tr>
+          <tr><td class="month">Jul</td><td>Warm and wet, brief daily storms, mornings often clear.</td><td><span class="price-tag price-low">Low — good value</span></td></tr>
+          <tr><td class="month">Aug</td><td>Rainy and humid, landscapes lush and green.</td><td><span class="price-tag price-low">Low — good value</span></td></tr>
+          <tr><td class="month">Sep</td><td>Heaviest rain of the year, rough seas on the west coast.</td><td><span class="price-tag price-low">Cheapest</span></td></tr>
+          <tr><td class="month">Oct</td><td>Rain tapering off by late month, still humid.</td><td><span class="price-tag price-low">Cheapest</span></td></tr>
+          <tr><td class="month">Nov</td><td>Weather clearing, Loy Krathong festival.</td><td><span class="price-tag price-mid">Shoulder — rising</span></td></tr>
+          <tr><td class="month">Dec</td><td>Cool, dry, sunny — driest month, holiday crowds.</td><td><span class="price-tag price-high">Peak — highest</span></td></tr>
+        </tbody>
+      </table>
+      <label class="field-label">Which months could you realistically travel? (pick all that work)</label>
+      <div class="pills month-pills" id="monthPills">
+        <label class="pill"><input type="checkbox" value="Jan"><span>Jan</span></label>
+        <label class="pill"><input type="checkbox" value="Feb"><span>Feb</span></label>
+        <label class="pill"><input type="checkbox" value="Mar"><span>Mar</span></label>
+        <label class="pill"><input type="checkbox" value="Apr"><span>Apr</span></label>
+        <label class="pill"><input type="checkbox" value="May"><span>May</span></label>
+        <label class="pill"><input type="checkbox" value="Jun"><span>Jun</span></label>
+        <label class="pill"><input type="checkbox" value="Jul"><span>Jul</span></label>
+        <label class="pill"><input type="checkbox" value="Aug"><span>Aug</span></label>
+        <label class="pill"><input type="checkbox" value="Sep"><span>Sep</span></label>
+        <label class="pill"><input type="checkbox" value="Oct"><span>Oct</span></label>
+        <label class="pill"><input type="checkbox" value="Nov"><span>Nov</span></label>
+        <label class="pill"><input type="checkbox" value="Dec"><span>Dec</span></label>
+      </div>
+      <label class="field-label" for="priceVsWeather">If cheaper dates mean more rain, how do you feel?</label>
+      <select id="priceVsWeather">
+        <option value="">Choose one</option>
+        <option>I'd rather pay more for the best weather</option>
+        <option>I'm fine trading some rain for lower prices</option>
+        <option>No strong preference, whatever fits the group</option>
+      </select>
+    </section>
+
+    <section class="card">
+      <div class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="#FBEBCE" stroke-width="1.8"><path d="M3 18v-6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v6"/><path d="M3 18h18"/><path d="M6 12V9a2 2 0 0 1 2-2h3"/></svg></div>
+      <div class="section-head"><h2 class="section-title">Rooming</h2><span class="section-tag">where we'll sleep</span></div>
+      <p class="section-sub">Where you'd want to stay and how you'd want to split rooms.</p>
+      <label class="field-label">Accommodation style</label>
+      <div class="pills" id="stylePills">
+        <label class="pill"><input type="checkbox" value="Budget hostel / guesthouse"><span>Budget hostel / guesthouse</span></label>
+        <label class="pill"><input type="checkbox" value="Mid-range hotel"><span>Mid-range hotel</span></label>
+        <label class="pill"><input type="checkbox" value="Boutique / design hotel"><span>Boutique / design hotel</span></label>
+        <label class="pill"><input type="checkbox" value="Luxury resort"><span>Luxury resort</span></label>
+        <label class="pill"><input type="checkbox" value="Private villa (whole group)"><span>Private villa (whole group)</span></label>
+      </div>
+      <label class="field-label">Room sharing</label>
+      <div class="radio-list" id="roomingRadios">
+        <label class="radio-opt"><input type="radio" name="rooming" value="Own room, own cost"><span class="box"><span class="dot"></span><span class="txt"><strong>Own room</strong><span>Happy to pay more for privacy</span></span></span></label>
+        <label class="radio-opt"><input type="radio" name="rooming" value="Share with one other person"><span class="box"><span class="dot"></span><span class="txt"><strong>Share with one other person</strong><span>Split a twin or double</span></span></span></label>
+        <label class="radio-opt"><input type="radio" name="rooming" value="Share a larger room / dorm to save money"><span class="box"><span class="dot"></span><span class="txt"><strong>Share a larger room or dorm</strong><span>Prioritize saving money</span></span></span></label>
+        <label class="radio-opt"><input type="radio" name="rooming" value="No preference"><span class="box"><span class="dot"></span><span class="txt"><strong>No preference</strong><span>Whatever works for the group</span></span></span></label>
+      </div>
+      <label class="field-label" for="roomWith">If sharing, anyone you'd want (or not want) to room with?</label>
+      <input type="text" id="roomWith" placeholder="Optional, kept private to the organizer">
+    </section>
+
+    <section class="card">
+      <div class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="#FBEBCE" stroke-width="1.8"><path d="M12 20c4-4 8-7.5 8-12a8 8 0 0 0-16 0c0 4.5 4 8 8 12z"/><circle cx="12" cy="8" r="2.4"/></svg></div>
+      <div class="section-head"><h2 class="section-title">Anything else</h2><span class="section-tag">loose ends</span></div>
+      <p class="section-sub">Budget, dietary needs, health or mobility considerations, travel style, whatever's relevant.</p>
+      <label class="field-label" for="budget">Rough total budget for the trip (flights not included)</label>
+      <select id="budget">
+        <option value="">Choose one</option>
+        <option>Under $1,000</option>
+        <option>$1,000–$2,000</option>
+        <option>$2,000–$3,500</option>
+        <option>$3,500+</option>
+        <option>Flexible / not sure yet</option>
+      </select>
+      <label class="field-label" for="tripLength">Ideal trip length</label>
+      <select id="tripLength">
+        <option value="">Choose one</option>
+        <option>Under a week</option>
+        <option>1–2 weeks</option>
+        <option>2–3 weeks</option>
+        <option>3+ weeks</option>
+      </select>
+      <label class="field-label" for="dietary">Dietary restrictions or preferences</label>
+      <input type="text" id="dietary" placeholder="e.g. vegetarian, allergies, none">
+      <label class="field-label" for="health">Any health, mobility, or comfort considerations we should plan around?</label>
+      <textarea id="health" placeholder="Optional — helps us pick activities and pacing that work for everyone"></textarea>
+      <label class="field-label" for="notes">Anything else on your mind?</label>
+      <textarea id="notes" placeholder="Concerns, must-dos, deal-breakers, whatever"></textarea>
+    </section>
+
+    <div class="submit-bar">
+      <button type="submit" class="submit" id="submitBtn">Submit my answers</button>
+      <p class="hint" id="formHint">Your answers go straight to the trip organizer by email — nobody else in the group sees them.</p>
+    </div>
+  </form>
+
+  <div class="confirm" id="confirmMsg">
+    <svg class="burst" viewBox="0 0 400 160" aria-hidden="true">
+      <g stroke="#E0A53D" stroke-width="3" stroke-linecap="round">
+        <line x1="60" y1="20" x2="70" y2="34"/>
+        <line x1="330" y1="24" x2="320" y2="38"/>
+        <line x1="40" y1="120" x2="52" y2="112"/>
+        <line x1="355" y1="110" x2="343" y2="118"/>
+      </g>
+      <circle cx="90" cy="130" r="4" fill="#E8734B"/>
+      <circle cx="310" cy="130" r="4" fill="#E4708A"/>
+      <circle cx="200" cy="18" r="4" fill="#E0A53D"/>
+    </svg>
+    <h3>You're in the plan!</h3>
+    <span id="confirmSub"></span>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const sections = document.querySelectorAll('section.card');
+  const pathEl = document.getElementById('progressPath');
+  sections.forEach(() => {
+    const seg = document.createElement('div');
+    seg.className = 'seg';
+    seg.innerHTML = '<i></i>';
+    pathEl.appendChild(seg);
+  });
+  const segs = pathEl.querySelectorAll('.seg i');
+
+  function fieldFilled(el){
+    if(!el) return false;
+    if(el.type === 'checkbox' || el.type === 'radio') return el.checked;
+    return el.value && el.value.trim().length > 0;
+  }
+
+  function updateProgress(){
+    sections.forEach((sec, i) => {
+      let filled = 0, total = 0;
+      const anyChecked = {};
+      sec.querySelectorAll('.pills').forEach(p => {
+        total++;
+        anyChecked[p.id] = !!p.querySelector('input:checked');
+      });
+      sec.querySelectorAll('input[type=text], input[type=email], textarea, select').forEach(inp => {
+        total++;
+        if(fieldFilled(inp)) filled++;
+      });
+      Object.values(anyChecked).forEach(v => { if(v) filled++; });
+      const radioGroup = sec.querySelector('input[type=radio]');
+      if(radioGroup){
+        total++;
+        if(sec.querySelector('input[type=radio]:checked')) filled++;
+      }
+      const pct = total > 0 ? Math.min(100, Math.round((filled/total)*100)) : 0;
+      if(segs[i]) segs[i].style.width = pct + '%';
+    });
+  }
+
+  document.getElementById('tripForm').addEventListener('input', updateProgress);
+  document.getElementById('tripForm').addEventListener('change', updateProgress);
+  updateProgress();
+
+  function collectPills(containerId){
+    return Array.from(document.querySelectorAll('#' + containerId + ' input:checked')).map(i => i.value);
+  }
+
+  function collectRadio(name){
+    const el = document.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  }
+
+  const ORGANIZER_EMAIL = 'jalesiagriffin@gmail.com';
+
+  const form = document.getElementById('tripForm');
+  const formHint = document.getElementById('formHint');
+
+  function listOrNone(arr){
+    return (arr && arr.length) ? arr.join(', ') : '(none selected)';
+  }
+
+  function buildEmailBody(entry){
+    const lines = [
+      'Thailand trip form response from ' + entry.name,
+      '',
+      'Email: ' + (entry.email || '(not provided)'),
+      '',
+      'Activities: ' + listOrNone(entry.activities),
+      'Other activities: ' + (entry.activitiesOther || '(none)'),
+      '',
+      'Scenery: ' + listOrNone(entry.scenery),
+      '',
+      'Months that work: ' + listOrNone(entry.months),
+      'Price vs weather: ' + (entry.priceVsWeather || '(not answered)'),
+      '',
+      'Accommodation style: ' + listOrNone(entry.accomStyle),
+      'Rooming preference: ' + (entry.rooming || '(not answered)'),
+      'Room with / not with: ' + (entry.roomWith || '(none noted)'),
+      '',
+      'Budget: ' + (entry.budget || '(not answered)'),
+      'Trip length: ' + (entry.tripLength || '(not answered)'),
+      'Dietary: ' + (entry.dietary || '(none noted)'),
+      'Health / mobility notes: ' + (entry.health || '(none noted)'),
+      'Other notes: ' + (entry.notes || '(none)')
+    ];
+    return lines.join('\n');
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    if(!name){
+      formHint.textContent = 'Please add your name before submitting.';
+      formHint.style.color = '#D2603C';
+      document.getElementById('name').focus();
+      return;
+    }
+
+    const entry = {
+      name: name,
+      email: document.getElementById('email').value.trim(),
+      activities: collectPills('activitiesPills'),
+      activitiesOther: document.getElementById('activitiesOther').value.trim(),
+      scenery: collectPills('sceneryPills'),
+      months: collectPills('monthPills'),
+      priceVsWeather: document.getElementById('priceVsWeather').value,
+      accomStyle: collectPills('stylePills'),
+      rooming: collectRadio('rooming'),
+      roomWith: document.getElementById('roomWith').value.trim(),
+      budget: document.getElementById('budget').value,
+      tripLength: document.getElementById('tripLength').value,
+      dietary: document.getElementById('dietary').value.trim(),
+      health: document.getElementById('health').value.trim(),
+      notes: document.getElementById('notes').value.trim()
+    };
+
+    const subject = 'Thailand trip form - ' + name;
+    const body = buildEmailBody(entry);
+    const mailtoUrl = 'mailto:' + ORGANIZER_EMAIL +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailtoUrl;
+
+    form.style.display = 'none';
+    const confirmEl = document.getElementById('confirmMsg');
+    confirmEl.style.display = 'block';
+    document.getElementById('confirmSub').textContent = 'Your email app should have opened with your answers filled in - just hit send, ' + name + '.';
+  });
+})();
+</script>
+
+</body>
+</html>
