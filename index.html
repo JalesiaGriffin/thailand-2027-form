@@ -607,10 +607,11 @@
     return el ? el.value : '';
   }
 
-  const ORGANIZER_EMAIL = 'jalesiagriffin@gmail.com';
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mkodvkpz';
 
   const form = document.getElementById('tripForm');
   const formHint = document.getElementById('formHint');
+  const submitBtn = document.getElementById('submitBtn');
 
   function listOrNone(arr){
     return (arr && arr.length) ? arr.join(', ') : '(none selected)';
@@ -671,18 +672,36 @@
       notes: document.getElementById('notes').value.trim()
     };
 
-    const subject = 'Thailand trip form - ' + name;
-    const body = buildEmailBody(entry);
-    const mailtoUrl = 'mailto:' + ORGANIZER_EMAIL +
-      '?subject=' + encodeURIComponent(subject) +
-      '&body=' + encodeURIComponent(body);
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    formHint.style.color = '';
+    formHint.textContent = 'Sending your answers…';
 
-    window.location.href = mailtoUrl;
-
-    form.style.display = 'none';
-    const confirmEl = document.getElementById('confirmMsg');
-    confirmEl.style.display = 'block';
-    document.getElementById('confirmSub').textContent = 'Your email app should have opened with your answers filled in - just hit send, ' + name + '.';
+    fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: (function(){
+        const fd = new FormData();
+        fd.append('_subject', 'Thailand trip form - ' + name);
+        fd.append('message', buildEmailBody(entry));
+        Object.keys(entry).forEach(function(key){
+          const val = entry[key];
+          fd.append(key, Array.isArray(val) ? val.join(', ') : val);
+        });
+        return fd;
+      })()
+    }).then(function(res){
+      if(!res.ok) throw new Error('Form submission failed');
+      form.style.display = 'none';
+      const confirmEl = document.getElementById('confirmMsg');
+      confirmEl.style.display = 'block';
+      document.getElementById('confirmSub').textContent = 'Your answers were sent straight to the trip organizer, ' + name + '. Thanks!';
+    }).catch(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit my answers';
+      formHint.textContent = 'Something went wrong sending your answers — please try again.';
+      formHint.style.color = '#D2603C';
+    });
   });
 })();
 </script>
